@@ -186,6 +186,30 @@ describe('AccordionItem', () => {
         ).toEqual(1);
     });
 
+    it('can dynamically set disabled prop', async () => {
+        const Wrapper = ({ disabled }: { disabled: boolean }) => (
+            <Provider inject={[accordionContainer]}>
+                <AccordionItem disabled={disabled}>
+                    <AccordionItemTitle>
+                        <div>Fake title</div>
+                    </AccordionItemTitle>
+                </AccordionItem>
+            </Provider>
+        );
+
+        const wrapper = await mountComplete(<Wrapper disabled={false} />);
+
+        wrapper.setProps({ disabled: true });
+
+        await setStateComplete(wrapper);
+
+        expect(
+            accordionContainer.state.items.filter(
+                item => item.disabled === true,
+            ).length,
+        ).toEqual(1);
+    });
+
     it('can dynamically unset expanded prop', async () => {
         const Wrapper = ({ expanded }: { expanded: boolean }) => (
             <Provider inject={[accordionContainer]}>

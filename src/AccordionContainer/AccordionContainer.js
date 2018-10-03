@@ -106,6 +106,20 @@ class AccordionContainer extends Container<StoreState> {
                 );
             }
         });
+
+    setDisabled = (key: string | number, disabled: boolean) => {
+        this.setState(state => ({
+            items: state.items.map(item => {
+                if (item.uuid === key) {
+                    return {
+                        ...item,
+                        disabled,
+                    };
+                }
+                return item;
+            }),
+        }))
+    }
 }
 
 export default AccordionContainer;
